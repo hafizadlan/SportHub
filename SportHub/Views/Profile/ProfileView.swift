@@ -205,6 +205,7 @@ struct ProfileView: View {
             Button("Cancel", role: .cancel) { }
             Button("Sign Out", role: .destructive) {
                 authManager.signOut()
+                dataManager.clearUser()
             }
         } message: {
             Text("Are you sure you want to sign out?")

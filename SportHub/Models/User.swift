@@ -35,17 +35,4 @@ struct User: Identifiable, Codable {
     }
 }
 
-struct UserActivity: Identifiable, Codable {
-    let id = UUID()
-    let event: Event
-    let status: ActivityStatus
-    let joinDate: Date
-    let notes: String?
-}
-
-enum ActivityStatus: String, CaseIterable, Codable {
-    case interested = "Interested"
-    case going = "Going"
-    case completed = "Completed"
-    case cancelled = "Cancelled"
-}
+// UserActivity moved to separate file - UserActivity.swift

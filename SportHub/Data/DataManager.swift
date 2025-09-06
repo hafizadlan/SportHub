@@ -17,6 +17,11 @@ class DataManager: ObservableObject {
         loadSampleData()
     }
     
+    func clearUser() {
+        user = nil
+        userActivities = []
+    }
+    
     private func loadSampleData() {
         let sampleOrganizers = [
             Organizer(

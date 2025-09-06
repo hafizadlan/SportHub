@@ -13,14 +13,16 @@ class AuthManager: ObservableObject {
     @Published var currentUser: AuthUser?
     @Published var isLoading = false
     @Published var errorMessage: String?
+    @Published var hasCompletedIntroduction = false
     
     private var cancellables = Set<AnyCancellable>()
-    
+    		
     init() {
         // Simulate loading time
         DispatchQueue.main.asyncAfter(deadline: .now() + 2.0) {
             self.checkAuthState()
         }
+        loadIntroductionStatus()
     }
     
     private func checkAuthState() {
@@ -125,11 +127,18 @@ class AuthManager: ObservableObject {
     func signOut() {
         currentUser = nil
         authState = .unauthenticated
+        hasCompletedIntroduction = false
         clearSavedUser()
+        clearIntroductionStatus()
     }
     
     func completeOnboarding() {
         authState = .onboarding
+    }
+    
+    func completeIntroduction() {
+        hasCompletedIntroduction = true
+        saveIntroductionStatus()
     }
     
     // MARK: - Private Methods
@@ -166,5 +175,17 @@ class AuthManager: ObservableObject {
     
     private func clearSavedUser() {
         UserDefaults.standard.removeObject(forKey: "saved_user")
+    }
+    
+    private func saveIntroductionStatus() {
+        UserDefaults.standard.set(hasCompletedIntroduction, forKey: "has_completed_introduction")
+    }
+    
+    private func loadIntroductionStatus() {
+        hasCompletedIntroduction = UserDefaults.standard.bool(forKey: "has_completed_introduction")
+    }
+    
+    private func clearIntroductionStatus() {
+        UserDefaults.standard.removeObject(forKey: "has_completed_introduction")
     }
 }

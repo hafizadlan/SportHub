@@ -21,28 +21,16 @@ struct ContentView: View {
                 LoginView()
                     .environmentObject(authManager)
                 
-            case .authenticated:
+            case .authenticated(let user):
                 if dataManager.user != nil {
                     MainTabView()
                         .environmentObject(dataManager)
-                } else {
+                } else if authManager.hasCompletedIntroduction {
                     OnboardingView()
                         .environmentObject(dataManager)
-                        .onAppear {
-                            // Convert AuthUser to User for the app
-                            if let authUser = authManager.currentUser {
-                                let user = User(
-                                    name: authUser.name,
-                                    email: authUser.email,
-                                    profileImageURL: authUser.profileImageURL,
-                                    interests: [.football, .badminton, .running], // Default interests
-                                    joinDate: authUser.createdAt,
-                                    totalEventsJoined: 0,
-                                    isOrganizer: false
-                                )
-                                dataManager.user = user
-                            }
-                        }
+                } else {
+                    AppIntroductionView()
+                        .environmentObject(authManager)
                 }
                 
             case .onboarding:
