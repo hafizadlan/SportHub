@@ -14,7 +14,7 @@ class DataManager: ObservableObject {
     @Published var userActivities: [UserActivity] = []
     
     init() {
-        loadSampleData()
+        loadSampleEvents()
     }
     
     func clearUser() {
@@ -22,7 +22,7 @@ class DataManager: ObservableObject {
         userActivities = []
     }
     
-    private func loadSampleData() {
+    private func loadSampleEvents() {
         let sampleOrganizers = [
             Organizer(
                 name: "KL Sports Center",
@@ -162,16 +162,8 @@ class DataManager: ObservableObject {
             )
         ]
         
-        // Create sample user
-        user = User(
-            name: "Hafiz Adlan",
-            email: "hafiz@example.com",
-            profileImageURL: nil,
-            interests: [.football, .badminton, .running],
-            joinDate: Date().addingTimeInterval(-86400 * 7),
-            totalEventsJoined: 3,
-            isOrganizer: false
-        )
+        // Don't create sample user - let it be nil initially
+        // User will be created during onboarding process
     }
     
     func joinEvent(_ event: Event) {

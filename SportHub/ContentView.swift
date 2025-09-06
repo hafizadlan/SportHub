@@ -39,6 +39,9 @@ struct ContentView: View {
             }
         }
         .animation(.easeInOut(duration: 0.3), value: authManager.authState)
+        .onReceive(NotificationCenter.default.publisher(for: NSNotification.Name("UserDidSignOut"))) { _ in
+            dataManager.clearUser()
+        }
     }
 }
 

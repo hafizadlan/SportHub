@@ -130,6 +130,9 @@ class AuthManager: ObservableObject {
         hasCompletedIntroduction = false
         clearSavedUser()
         clearIntroductionStatus()
+        
+        // Clear DataManager user data on logout
+        NotificationCenter.default.post(name: NSNotification.Name("UserDidSignOut"), object: nil)
     }
     
     func completeOnboarding() {
